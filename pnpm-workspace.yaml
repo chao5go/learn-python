@@ -1,2 +1,5 @@
+# 单包项目，仅用此文件做 patch；pnpm 要求存在 packages 字段
+packages: []
+
 patchedDependencies:
   react-py: patches/react-py.patch

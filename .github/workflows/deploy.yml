@@ -1,3 +1,6 @@
+# 基于 GitHub 官方 “Deploy Next.js to GitHub Pages” 流程
+# 使用 pnpm、BASE_PATH 子路径、静态导出（移除 api 路由）
+# 文档: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 name: Deploy to GitHub Pages
 
 on:
