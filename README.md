@@ -2,6 +2,10 @@
 
 面向 LeetCode 的 Python 语法与基础教程，在浏览器里写代码、看结果，无需安装环境。
 
+- **访问地址**：`https://www.pycraft.cn/`
+
+![image.png](https://piggo5.oss-cn-shenzhen.aliyuncs.com/2026/20260201160110082.png)
+
 - **在线学**：基础、数据结构、标准库、进阶与常见算法，每节都可编辑运行
 - **技术栈**：Next.js + Fumadocs + react-py + Monaco Editor + Tailwind
 - **更新**：[CHANGELOG.md](./CHANGELOG.md)
