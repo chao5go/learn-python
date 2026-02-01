@@ -7,6 +7,9 @@
 ![image.png](https://piggo5.oss-cn-shenzhen.aliyuncs.com/2026/20260201160110082.png)
 
 - **在线学**：基础、数据结构、标准库、进阶与常见算法，每节都可编辑运行
+  
+![yanshi](https://piggo5.oss-cn-shenzhen.aliyuncs.com/2026/20260201-161508.gif)
+
 - **技术栈**：Next.js + Fumadocs + react-py + Monaco Editor + Tailwind
 - **更新**：[CHANGELOG.md](./CHANGELOG.md)
 
