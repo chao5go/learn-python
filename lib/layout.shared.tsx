@@ -35,6 +35,10 @@ export function baseOptions(): BaseLayoutProps {
         text: '文档',
         url: '/docs',
       },
+      {
+        text: '更新记录',
+        url: '/docs/updates',
+      },
     ],
   };
 }

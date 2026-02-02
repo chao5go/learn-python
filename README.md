@@ -11,7 +11,6 @@
 ![yanshi](https://piggo5.oss-cn-shenzhen.aliyuncs.com/2026/20260201-161508.gif)
 
 - **技术栈**：Next.js + Fumadocs + react-py + Monaco Editor + Tailwind
-- **更新**：[CHANGELOG.md](./CHANGELOG.md)
 
 ---
 

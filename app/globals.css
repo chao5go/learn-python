@@ -1,2 +1,64 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/style.css';
+
+/* 更清晰的灰阶 + 低饱和蓝色强调（更耐看、层级更分明） */
+@theme {
+  --color-fd-background: hsl(38 30% 97%);
+  --color-fd-foreground: hsl(220 25% 12%);
+
+  --color-fd-muted: hsl(36 18% 93%);
+  --color-fd-muted-foreground: hsl(220 10% 40%);
+
+  --color-fd-popover: hsl(38 30% 98%);
+  --color-fd-popover-foreground: hsl(220 20% 16%);
+
+  --color-fd-card: hsl(36 22% 95%);
+  --color-fd-card-foreground: hsl(220 25% 12%);
+
+  --color-fd-border: hsla(220 12% 25% / 0.16);
+
+  /* Python-ish 蓝色：用于链接/选中态/焦点环 */
+  --color-fd-primary: hsl(210 78% 42%);
+  --color-fd-primary-foreground: hsl(0 0% 100%);
+
+  --color-fd-secondary: hsl(36 14% 92%);
+  --color-fd-secondary-foreground: hsl(220 18% 18%);
+
+  /* Hover/active 的淡蓝“底色”，提升选中态辨识度 */
+  --color-fd-accent: hsla(210 90% 45% / 0.12);
+  --color-fd-accent-foreground: hsl(210 55% 18%);
+
+  --color-fd-ring: hsla(210 90% 45% / 0.45);
+}
+
+.dark {
+  --color-fd-background: hsl(220 18% 8%);
+  --color-fd-foreground: hsl(220 14% 92%);
+
+  --color-fd-muted: hsl(220 14% 12%);
+  --color-fd-muted-foreground: hsla(220 10% 78% / 0.78);
+
+  --color-fd-popover: hsl(220 16% 10%);
+  --color-fd-popover-foreground: hsl(220 12% 90%);
+
+  --color-fd-card: hsl(220 16% 9.5%);
+  --color-fd-card-foreground: hsl(220 14% 94%);
+
+  --color-fd-border: hsla(220 18% 70% / 0.14);
+
+  --color-fd-primary: hsl(210 90% 60%);
+  --color-fd-primary-foreground: hsl(220 18% 10%);
+
+  --color-fd-secondary: hsl(220 14% 13.5%);
+  --color-fd-secondary-foreground: hsl(220 12% 92%);
+
+  --color-fd-accent: hsla(210 90% 60% / 0.14);
+  --color-fd-accent-foreground: hsl(210 55% 90%);
+
+  --color-fd-ring: hsla(210 90% 60% / 0.5);
+}
+
+/* 细节：让分割线/卡片边界更“干净”一点 */
+:root {
+  --fd-layout-width: 1440px;
+}
