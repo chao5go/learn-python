@@ -1,0 +1,179 @@
+---
+title: 装饰器（Decorator）
+description: 用 @ 给函数“加一层能力”：缓存、计时、日志、权限校验
+---
+
+# 装饰器（Decorator）
+
+装饰器可以理解为：**不改原函数代码**，在外面“包一层”，给函数增加额外能力（比如日志、计时、缓存、权限判断）。
+
+它之所以能做到，是因为 **Python 里函数也是对象**：能作为参数传递、也能作为返回值返回。
+
+---
+
+## 最小例子：给函数加日志
+
+装饰器本质是一个函数：**接收一个函数 `func`，返回一个新函数 `wrapper`**。
+
+<PythonPlayground code={`def log_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"[call] {func.__name__} args={args}, kwargs={kwargs}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_call
+def add(a, b):
+    return a + b
+
+print(add(2, 3))`} />
+
+等价写法（更直观）：
+
+<PythonPlayground code={`def log_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"[call] {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
+def add(a, b):
+    return a + b
+
+add = log_call(add)   # 手动“套一层”
+print(add(2, 3))`} />
+
+---
+
+## `functools.wraps`：保留函数名与注释（推荐）
+
+如果不做处理，装饰后函数的 `__name__`、`__doc__` 会变成 `wrapper` 的信息。用 `functools.wraps` 可以保留原信息（很多库/工具依赖这个）。
+
+<PythonPlayground code={`from functools import wraps
+
+def log_call(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print(f"[call] {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_call
+def add(a, b):
+    "return a + b"
+    return a + b
+
+print(add.__name__)  # add
+print(add.__doc__)   # return a + b`} />
+
+---
+
+## 带参数的装饰器：装饰器工厂
+
+想写 `@log_call(prefix="DEBUG")` 这种形式，需要多一层：外层先接收装饰器参数，返回真正的装饰器。
+
+<PythonPlayground code={`from functools import wraps
+
+def log_call(prefix="LOG"):
+    def deco(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(f"[{prefix}] {func.__name__}")
+            return func(*args, **kwargs)
+        return wrapper
+    return deco
+
+@log_call(prefix="DEBUG")
+def mul(a, b):
+    return a * b
+
+print(mul(3, 4))`} />
+
+---
+
+## 多个装饰器的顺序（常见坑）
+
+写成：
+
+```python
+@A
+@B
+def f(): ...
+```
+
+等价于：
+
+```python
+f = A(B(f))
+```
+
+也就是 **离函数更近的 `@B` 先应用**，外层再套 `@A`。
+
+<PythonPlayground code={`from functools import wraps
+
+def A(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print("A before")
+        out = func(*args, **kwargs)
+        print("A after")
+        return out
+    return wrapper
+
+def B(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print("B before")
+        out = func(*args, **kwargs)
+        print("B after")
+        return out
+    return wrapper
+
+@A
+@B
+def f():
+    print("f")
+
+f()`} />
+
+---
+
+## LeetCode 高价值用法：`lru_cache` 记忆化
+
+递归 DFS / 状态 DP 很常见：**同一个状态会重复算**。用 `functools.lru_cache` 可以把结果缓存起来，显著提速。
+
+<PythonPlayground code={`from functools import lru_cache
+
+# 例子：爬楼梯（F(n) = F(n-1) + F(n-2)）
+@lru_cache(None)
+def ways(n):
+    if n <= 2:
+        return n
+    return ways(n - 1) + ways(n - 2)
+
+print(ways(10))  # 89`} />
+
+二维/多参数状态也一样：
+
+<PythonPlayground code={`from functools import lru_cache
+
+# 例子：网格走法（只演示状态形式）
+@lru_cache(None)
+def dfs(r, c):
+    if r == 0 and c == 0:
+        return 1
+    ans = 0
+    if r > 0:
+        ans += dfs(r - 1, c)
+    if c > 0:
+        ans += dfs(r, c - 1)
+    return ans
+
+print(dfs(3, 3))  # 20`} />
+
+---
+
+## 小结
+
+- **装饰器**：接收函数、返回“包了一层的新函数”，常用 `*args, **kwargs` 做通用转发。
+- **`@wraps`**：强烈建议加，保留原函数元信息。
+- **带参数装饰器**：多一层“装饰器工厂”。
+- **刷题常用**：`@lru_cache(None)` 做记忆化，提升递归 DP/DFS 性能。
